@@ -415,7 +415,7 @@ endif
 	$(hide) TARGET_BUILD_TYPE="$(TARGET_BUILD_VARIANT)" \
 	        TARGET_BUILD_FLAVOR="$(TARGET_BUILD_FLAVOR)" \
 	        TARGET_DEVICE="$(TARGET_DEVICE)" \
-	        GZOSP_DEVICE="$(TARGET_DEVICE)" \
+	        TESLA_DEVICE="$(TARGET_DEVICE)" \
 	        PRODUCT_NAME="$(TARGET_PRODUCT)" \
 	        PRODUCT_BRAND="$(PRODUCT_BRAND)" \
 	        PRODUCT_DEFAULT_LOCALE="$(call get-default-product-locale,$(PRODUCT_LOCALES))" \
@@ -4430,25 +4430,27 @@ $(INTERNAL_OTA_PACKAGE_TARGET): $(BUILT_TARGET_FILES_PACKAGE) \
 	@echo "Package OTA: $@"
 	$(call build-ota-package-target,$@,-k $(KEY_CERT_PAIR) --output_metadata_path $(INTERNAL_OTA_METADATA))
 
-GZOSP_TARGET_PACKAGE := $(PRODUCT_OUT)/$(GZOSP_VERSION).zip
+TESLA_TARGET_PACKAGE := $(PRODUCT_OUT)/$(TESLA_VERSION).zip
 
-.PHONY: otapackage gzosp
+.PHONY: otapackage tesla
 otapackage: $(INTERNAL_OTA_PACKAGE_TARGET)
-gzosp: otapackage
-	$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(GZOSP_TARGET_PACKAGE)
-	$(hide) $(MD5SUM) $(GZOSP_TARGET_PACKAGE) > $(GZOSP_TARGET_PACKAGE).md5sum
-	@echo -e ${CL_RED}""${CL_RED}
-	@echo -e ${CL_RED}"    ▄██████▄   ▄███████▄   ▄██████▄     ▄████████    ▄███████▄ "${CL_RED}
-	@echo -e ${CL_RED}"   ███    ███ ██▀     ▄██ ███    ███   ███    ███   ███    ███ "${CL_RED}
-	@echo -e ${CL_RED}"   ███    █▀        ▄███▀ ███    ███   ███    █▀    ███    ███ "${CL_RED}
-	@echo -e ${CL_RED}"  ▄███         ▀█▀▄███▀▄▄ ███    ███   ███          ███    ███ "${CL_RED}
-	@echo -e ${CL_RED}" ▀▀███ ████▄    ▄███▀   ▀ ███    ███ ▀███████████ ▀█████████▀ "${CL_RED}
-	@echo -e ${CL_RED}"   ███    ███ ▄███▀       ███    ███          ███   ███ "${CL_RED}
-	@echo -e ${CL_RED}"   ███    ███ ███▄     ▄█ ███    ███    ▄█    ███   ███ "${CL_RED}
-	@echo -e ${CL_RED}"   ████████▀   ▀████████▀  ▀██████▀   ▄████████▀   ▄████▀ "${CL_RED}
-	@echo -e ${CL_RED}"                           A Ground Zero Roms "${CL_RED}
-	@echo -e ${CL_RED}"                                Project      "${CL_RED}
-	@echo -e "Package complete: $(GZOSP_TARGET_PACKAGE)"
+tesla: otapackage
+	$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(TESLA_TARGET_PACKAGE)
+	$(hide) $(MD5SUM) $(TESLA_TARGET_PACKAGE) > $(TESLA_TARGET_PACKAGE).md5sum
+	@echo -e ${CL_CYN}" "${CL_CYN}
+	@echo -e ${CL_CYN}"  _________  _______   ________  ___       ________      "${CL_CYN}
+	@echo -e ${CL_CYN}" |\___   __\ \  ___ \ |\   ____\|\  \     |\   __  \     "${CL_CYN}
+	@echo -e ${CL_CYN}" \|___ \  \_\ \   __/|\ \  \___|\ \  \    \ \  \|\  \    "${CL_CYN}
+	@echo -e ${CL_CYN}"      \ \  \ \ \  \_|/_\ \_____  \ \  \    \ \   __  \   "${CL_CYN}
+	@echo -e ${CL_CYN}"       \ \  \ \ \  \_|\ \|____|\  \ \  \____\ \  \ \  \  "${CL_CYN}
+	@echo -e ${CL_CYN}"        \ \__\ \ \_______\____\_\  \ \_______\ \__\ \__\ "${CL_CYN}
+	@echo -e ${CL_CYN}"         \|__|  \|_______|\_________\|_______|\|__|\|__| "${CL_CYN}
+	@echo -e ${CL_CYN}"                         \|_________|                    "${CL_CYN}
+	@echo -e ${CL_CYN}"                                                         "${CL_CYN}
+	@echo -e ${CL_BLU}"                   The present is theirs                 "${CL_BLU}
+	@echo -e ${CL_BLU}"       the future, for which I really worked, is mine.   "${CL_BLU}
+	@echo -e ${CL_BLU}"                                       'Nikola Tesla'    "${CL_BLU}
+	@echo -e ${CL_CYN}"Package complete: $(TESLA_TARGET_PACKAGE)"${CL_CYN}${CL_RST}
 
 ifeq ($(BOARD_BUILD_RETROFIT_DYNAMIC_PARTITIONS_OTA_PACKAGE),true)
 name := $(TARGET_PRODUCT)
